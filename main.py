@@ -1,5 +1,5 @@
 #1st step
-from fastapi import FastAPI ,HTTPException
+from fastapi import FastAPI , HTTPException
 app = FastAPI()
  # GET request
 @app.get("/")
