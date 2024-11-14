@@ -2,19 +2,19 @@ import streamlit as st
 import requests
 
 # Define the FastAPI server URL (assuming it's running locally)
-API_URL = "http://127.0.0.1:8000/predict"
+API_URL = "https://usecase-7-fastapi.onrender.com/predict"
 
 # Streamlit app UI
 st.title("Football Player Prediction")
 
 # User input fields
 position = st.selectbox("Position", ["Forward", "Midfielder", "Defender", "Goalkeeper"])
-height = st.number_input("Height (m)", min_value=0.0, max_value=3.0, step=0.01)
-age = st.number_input("Age (years)", min_value=0, max_value=100, step=1)
-appearance = st.number_input("Appearances", min_value=0, max_value=1000, step=1)
-minutes_played = st.number_input("Minutes Played", min_value=0, max_value=100000, step=1)
-current_value = st.number_input("Current Value (in USD)", min_value=0, max_value=100000000, step=100000)
-highest_value = st.number_input("Highest Value (in USD)", min_value=0, max_value=100000000, step=100000)
+height = st.number_input("Height ", min_value=140.0, max_value=200.0)
+age = st.number_input("Age (years)", min_value=19, max_value=35)
+appearance = st.number_input("Appearances", min_value=200, max_value=9000)
+minutes_played = st.number_input("Minutes Played", min_value=120, max_value=100000)
+current_value = st.number_input("Current Value (in USD)", min_value=10000, max_value=70000000)
+highest_value = st.number_input("Highest Value (in USD)", min_value=10000, max_value=70000000)
 
 # Prepare the input dictionary
 input_data = {
