@@ -2,10 +2,10 @@ import streamlit as st
 import requests
 
 # Define the FastAPI server URL (your remote URL)
-API_URL = "https://usecase-7-fastapi.onrender.com/predict"
+API_URL = "https://usecase-7svm.onrender.com/predict"
 
 # Streamlit app UI
-st.title("Football Player Prediction")
+st.title("Football Player Prediction SVM")
 
 # User input fields with updated min/max values
 position = st.selectbox("Position", ["Forward", "Midfielder", "Defender", "Goalkeeper"])
