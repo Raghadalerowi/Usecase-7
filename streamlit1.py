@@ -1,9 +1,17 @@
 import streamlit as st
 import requests
+import json 
 
 # Define the FastAPI server URL (your remote URL)
 API_URL = "https://usecase-7svm.onrender.com/predict"
 
+def get_prediction(input_data):
+    response = requests.post(API_URL, json=input_data)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return {"error": "Something went wrong"}
+    
 # Streamlit app UI
 st.title("Football Player Prediction SVM")
 
@@ -29,17 +37,9 @@ input_data = {
 
 # When the user clicks the "Predict" button, send the input to the FastAPI backend
 if st.button("Predict"):
-    try:
-        # Send the request to FastAPI (remote server)
-        response = requests.post(API_URL, json=input_data)
-        
-        # Check if the response is successful
-        if response.status_code == 200:
-            response_data = response.json()
-            st.write(f"Prediction Result: {response_data['prediction']}")
-        else:
-            # Log the error status and content if the response is not successful
-            st.error(f"Error: Received {response.status_code} from the server. Response: {response.text}")
-    
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error connecting to FastAPI backend: {e}")
+    prediction = get_prediction(input_data)
+
+    if "error" in prediction:
+        st.error(prediction["error"])
+    else:
+        st.success(f"Prediction: {prediction['pred']}")
