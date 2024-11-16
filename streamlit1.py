@@ -5,30 +5,12 @@ import json
 # Define the FastAPI server URL (your remote URL)
 API_URL = "https://usecase-7svm.onrender.com/predict"
 
-
-import requests
-
-def get_prediction(input_data, api_url):
-    try:
-        # Send POST request to the API
-        response = requests.post(api_url, json=input_data, timeout=10)
-        
-        if response.status_code == 200:
-            return response.json()
-        elif response.status_code == 400:
-            return {"error": "Bad Request: The data you sent is incorrect."}
-        elif response.status_code == 404:
-            return {"error": "Not Found: The API endpoint doesn't exist."}
-        elif response.status_code == 500:
-            return {"error": "Internal Server Error: Something went wrong on the server."}
-        else:
-            return {"error": f"Unexpected error: {response.status_code}. Response: {response.text}"}
-
-    except requests.exceptions.Timeout:
-        return {"error": "The request timed out. Please try again later."}
-    except requests.exceptions.RequestException as e:
-        return {"error": f"An error occurred: {str(e)}"}
-
+def get_prediction(input_data):
+    response = requests.post(API_URL, json=input_data)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return {"error": "Something went wrong"}
     
 # Streamlit app UI
 st.title("Football Player Prediction SVM")
