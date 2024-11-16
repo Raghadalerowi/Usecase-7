@@ -9,7 +9,7 @@ st.title("Football Player Prediction SVM")
 
 # User input fields with updated min/max values
 position = st.selectbox("Position", ["Forward", "Midfielder", "Defender", "Goalkeeper"])
-height = st.number_input("Height (cm)", min_value=140.0, max_value=200.0, step=0.1)
+height = st.number_input("Height (cm)", min_value=140.0, max_value=200.0, step=2)
 age = st.number_input("Age (years)", min_value=19, max_value=35)
 appearance = st.number_input("Appearances", min_value=200, max_value=9000)
 minutes_played = st.number_input("Minutes Played", min_value=120, max_value=100000)
