@@ -5,36 +5,28 @@ import json
 # Define the FastAPI server URL (your remote URL)
 API_URL = "https://usecase-7svm.onrender.com/predict"
 
+
 import requests
 
 def get_prediction(input_data, api_url):
     try:
-        # Send POST request
-        response = requests.post(api_url, json=input_data, timeout=10)  # You can adjust timeout as needed
+        # Send POST request to the API
+        response = requests.post(api_url, json=input_data, timeout=10)
         
-        # Check if the response status is 200 (OK)
         if response.status_code == 200:
             return response.json()
-        
-        # Handle non-200 status codes more specifically
         elif response.status_code == 400:
             return {"error": "Bad Request: The data you sent is incorrect."}
-        
         elif response.status_code == 404:
             return {"error": "Not Found: The API endpoint doesn't exist."}
-        
         elif response.status_code == 500:
             return {"error": "Internal Server Error: Something went wrong on the server."}
-        
         else:
-            # Catch all other status codes
             return {"error": f"Unexpected error: {response.status_code}. Response: {response.text}"}
 
     except requests.exceptions.Timeout:
         return {"error": "The request timed out. Please try again later."}
-    
     except requests.exceptions.RequestException as e:
-        # This will catch other potential exceptions (e.g., connection errors)
         return {"error": f"An error occurred: {str(e)}"}
 
     
