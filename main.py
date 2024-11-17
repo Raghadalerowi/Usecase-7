@@ -17,8 +17,6 @@ class InputFeatures(BaseModel):
     appearance: int
     minutes_played: float
     highest_value: float
-    position: str
-
 
 def preprocessing(input_features: InputFeatures):
     dict_f = {
@@ -26,12 +24,6 @@ def preprocessing(input_features: InputFeatures):
         'appearance': input_features.appearance,
         'minutes played': input_features.minutes_played,
         'highest_value': input_features.highest_value,
-        'position_Goalkeeper': int(input_features.position == 'Goalkeeper'),
-        'position_midfield': int(input_features.position == 'Midfield'),
-        'position_Attack': int(input_features.position == 'Attack'),
-        'position_Defender': int(input_features.position == 'Defender'),
-
-
     }
     print(f"dict_f: {dict_f}")  # Add debug log here
     features_list = [dict_f[key] for key in sorted(dict_f)]

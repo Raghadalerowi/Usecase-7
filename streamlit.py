@@ -24,8 +24,7 @@ st.title("Football Player Prediction")
 age = st.number_input("Age", min_value=18, max_value=40, value=25)
 appearance = st.number_input("Appearances", min_value=0, value=30)
 minutes_played = st.number_input("Minutes Played", min_value=0, value=2700)
-highest_value = st.number_input("Highest Value", min_value=0.0, value=100.0, step=0.1)
-position = st.selectbox("Position", options=["Goalkeeper", "Midfield","Attack","Defender"])
+highest_value = st.number_input("Highest Value", min_value=10000.0, value=100.0, step=0.1)
 
 # Prepare the data for the API call
 data = {
@@ -33,7 +32,6 @@ data = {
     "appearance": appearance,
     "minutes_played": minutes_played, # Ensure the type matches API requirements
     "highest_value": highest_value,
-    "position": position
 }
 
 # When the user clicks the "Predict" button
