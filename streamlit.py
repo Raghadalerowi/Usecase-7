@@ -1,45 +1,50 @@
 import streamlit as st
 import requests
+import json
 
-# Define the FastAPI server URL (your remote URL)
-API_URL = "https://usecase-7knn.onrender.com/predict"
+# FastAPI endpoint URL
+API_URL = "https://football-eda-ml.onrender.com/predict"
+
+
+# Function to make the POST request to the FastAPI model
+def get_prediction(data):
+    response = requests.post(API_URL, json=data)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return {"error": "Something went wrong"}
+
 
 # Streamlit app UI
 st.title("Football Player Prediction")
 
-# User input fields with updated min/max values
-position = st.selectbox("Position", ["Forward", "Midfielder", "Defender", "Goalkeeper"])
-height = st.number_input("Height (cm)", min_value=140.0, max_value=200.0, step=0.1)
-age = st.number_input("Age (years)", min_value=19, max_value=35)
-appearance = st.number_input("Appearances", min_value=200, max_value=9000)
-minutes_played = st.number_input("Minutes Played", min_value=120, max_value=100000)
-current_value = st.number_input("Current Value (in USD)", min_value=10000, max_value=70000000)
-highest_value = st.number_input("Highest Value (in USD)", min_value=10000, max_value=70000000)
+# Input fields for the prediction
+age = st.number_input("Age", min_value=18, max_value=40, value=25)
+appearance = st.number_input("Appearances", min_value=0, value=30)
+minutes_played = st.number_input("Minutes Played", min_value=0, value=2700)
+days_injured = st.number_input("Days Injured", min_value=0, value=15)
+games_injured = st.number_input("Games Injured", min_value=0, value=3)
+award = st.number_input("Award (Numeric)", min_value=0, value=1)
+highest_value = st.number_input("Highest Value", min_value=0.0, value=15.5)
+position = st.selectbox("Position", options=["Goalkeeper", "Midfield"])
 
-# Prepare the input dictionary with the user inputs
-input_data = {
-    "position": position,
-    "height": height,
+# Prepare the data for the API call
+data = {
     "age": age,
     "appearance": appearance,
     "minutes_played": minutes_played,
-    "current_value": current_value,
-    "highest_value": highest_value
+    "days_injured": days_injured,
+    "games_injured": games_injured,
+    "award": award,
+    "highest_value": highest_value,
+    "position": position
 }
 
-# When the user clicks the "Predict" button, send the input to the FastAPI backend
+# When the user clicks the "Predict" button
 if st.button("Predict"):
-    try:
-        # Send the request to FastAPI (remote server)
-        response = requests.post(API_URL, json=input_data)
-        
-        # Check if the response is successful
-        if response.status_code == 200:
-            response_data = response.json()
-            st.write(f"Prediction Result: {response_data['prediction']}")
-        else:
-            # Log the error status and content if the response is not successful
-            st.error(f"Error: Received {response.status_code} from the server. Response: {response.text}")
-    
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error connecting to FastAPI backend: {e}")
+    prediction = get_prediction(data)
+
+    if "error" in prediction:
+        st.error(prediction["error"])
+    else:
+        st.success(f"Prediction: {prediction['pred']}")

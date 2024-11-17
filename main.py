@@ -1,46 +1,45 @@
-from fastapi import FastAPI, HTTPException
-import joblib
+from fastapi import FastAPI
 from pydantic import BaseModel
-#import sklearn
-model = joblib.load('kmeans_model.joblib')
-scaler = joblib.load('scaler.joblib')
-app = FastAPI()
-# GET request
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to Tuwaiq Academy"}
-# get request
-@app.get("/items/")
-def create_item(item: dict):
-    return {"item": item}
+import joblib
 
-# Define a Pydantic model for input data validation
+app = FastAPI()
+
+# Load model and scaler
+model = joblib.load('ML/Suppervised/Classification/knn_model.joblib')
+scaler = joblib.load('ML/Suppervised/Classification/scaler.joblib')
+
+@app.get("/")
+def root():
+    return "Welcome To Tuwaiq Academy"
+
 class InputFeatures(BaseModel):
-    highest_value: int
+    age: float
     appearance: int
-    minutes_played: int
-    award: int
-    assists: float
-    goals: float
+    minutes_played: float
+    days_injured: int
     games_injured: int
+    award: int
+    highest_value: float
+    position: str
+
+
 def preprocessing(input_features: InputFeatures):
     dict_f = {
-    'highest_value': input_features.highest_value,
-    'appearance': input_features.appearance,
-    'minutes played': input_features.minutes_played,
-    'award': input_features.award,
-    'assists': input_features.assists,
-    'goals': input_features.goals,
-    'games_injured': input_features.games_injured ,
+        'age': input_features.age,
+        'appearance': input_features.appearance,
+        'minutes played': input_features.minutes_played,
+        'days_injured': input_features.days_injured,
+        'games_injured': input_features.games_injured,
+        'award': input_features.award,
+        'highest_value': input_features.highest_value,
+        'position_Goalkeeper': int(input_features.position == 'Goalkeeper'),
+        'position_midfield': int(input_features.position == 'Midfield'),
     }
-    # Convert dictionary values to a list in the correct order
+    print(f"dict_f: {dict_f}")  # Add debug log here
     features_list = [dict_f[key] for key in sorted(dict_f)]
-    # Scale the input features
-    scaled_features = scaler.transform([list(dict_f.values())])
+    print(f"features_list: {features_list}")  # Add debug log here
+    scaled_features = scaler.transform([features_list])
     return scaled_features
-@app.get("/predict")
-def predict(input_features: InputFeatures):
-    return preprocessing(input_features)
 
 
 @app.post("/predict")
