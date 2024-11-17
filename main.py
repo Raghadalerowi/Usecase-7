@@ -14,22 +14,18 @@ def root():
 
 class InputFeatures(BaseModel):
     age: int
-    height:int
     appearance: int
     minutes_played: float
     highest_value: float
-    current_value:float
     position: str
 
 
 def preprocessing(input_features: InputFeatures):
     dict_f = {
         'age': input_features.age,
-        'height': input_features.height,
         'appearance': input_features.appearance,
         'minutes played': input_features.minutes_played,
         'highest_value': input_features.highest_value,
-        'current_value': input_features.current_value,
         'position_Goalkeeper': int(input_features.position == 'Goalkeeper'),
         'position_midfield': int(input_features.position == 'Midfield'),
         'position_Attack': int(input_features.position == 'Attack'),
