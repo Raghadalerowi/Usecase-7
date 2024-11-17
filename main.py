@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 import joblib
 from pydantic import BaseModel
 #import sklearn
-model = joblib.load('knn_model.joblib')
+model = joblib.load('kmeans_model.joblib')
 scaler = joblib.load('scaler.joblib')
 app = FastAPI()
 # GET request
