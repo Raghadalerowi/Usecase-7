@@ -85,5 +85,5 @@ def preprocessing(input_features: InputFeatures):
 @app.post("/predict")
 async def predict(input_features: InputFeatures):
     data = preprocessing(input_features)
-    y_pred = model.predict(InputFeatures)
+    y_pred = model.predict(data)
     return {"pred": y_pred.tolist()[0]}
