@@ -13,8 +13,8 @@ def root():
     return "Welcome To Tuwaiq Academy"
 
 class InputFeatures(BaseModel):
-    age: float
-    height:float
+    age: int
+    height:int
     appearance: int
     minutes_played: float
     highest_value: float

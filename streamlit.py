@@ -25,8 +25,8 @@ age = st.number_input("Age", min_value=18, max_value=40, value=25)
 height = st.number_input("Height (CM)", min_value=150, max_value=200, value=150)
 appearance = st.number_input("Appearances", min_value=0, value=30)
 minutes_played = st.number_input("Minutes Played", min_value=0, value=2700)
-highest_value = st.number_input("Highest Value", min_value=0.0, value=100)
-current_value = st.number_input("Current Value", min_value=0.0, value=100)
+highest_value = st.number_input("Highest Value", min_value=0.0, value=100.0, step=0.1)
+current_value = st.number_input("Current Value", min_value=0.0, value=100.0, step=0.1)
 position = st.selectbox("Position", options=["Goalkeeper", "Midfield","Attack","Defender"])
 
 # Prepare the data for the API call
