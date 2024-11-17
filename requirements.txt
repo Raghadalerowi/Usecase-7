@@ -1,11 +1,6 @@
-streamlit
-requests
-numpy
+fastapi
 joblib
 pydantic
-fastapi
-uvicorn
 scikit-learn
-seaborn
-matplotlib
-pandas
+uvicorn
+requests
