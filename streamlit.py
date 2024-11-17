@@ -3,7 +3,7 @@ import requests
 import json
 
 # FastAPI endpoint URL
-API_URL = "https://football-eda-ml.onrender.com/predict"
+API_URL = "https://usecase-7knn.onrender.com/predict"
 
 
 # Function to make the POST request to the FastAPI model
