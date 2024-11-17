@@ -5,8 +5,8 @@ import joblib
 app = FastAPI()
 
 # Load model and scaler
-model = joblib.load('ML/Suppervised/Classification/knn_model.joblib')
-scaler = joblib.load('ML/Suppervised/Classification/scaler.joblib')
+model = joblib.load('kmeans_model.joblib')
+scaler = joblib.load('scaler.joblib')
 
 @app.get("/")
 def root():
