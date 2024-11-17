@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Define the FastAPI server URL (your remote URL)
-API_URL = "https://usecase-7-fastapi.onrender.com/predict"
+API_URL = "https://usecase-7knn.onrender.com/predict"
 
 # Streamlit app UI
 st.title("Football Player Prediction")

@@ -1,4 +1,5 @@
-#1st step
+from sklearn.preprocessing import StandardScaler
+from pydantic import BaseModel
 from fastapi import FastAPI , HTTPException
 app = FastAPI()
  # GET request
@@ -10,8 +11,6 @@ def read_root():
 def create_item(item: dict):
     return {"item": item}
 
-#2nd step
-from pydantic import BaseModel
 # Define a Pydantic model for input data validation
 class InputFeatures(BaseModel):
     position: str
@@ -40,7 +39,6 @@ def preprocessing(input_features: InputFeatures):
 def predict(input_features: InputFeatures):
     return preprocessing(input_features)
 
-from sklearn.preprocessing import StandardScaler
 
 # Assuming scaler is already fitted elsewhere in your code
 scaler = StandardScaler()
@@ -83,5 +81,5 @@ def preprocessing(input_features: InputFeatures):
 @app.post("/predict")
 async def predict(input_features: InputFeatures):
     data = preprocessing(input_features)
-    y_pred = model.predict(data)
+    y_pred = model.predict(InputFeatures)
     return {"pred": y_pred.tolist()[0]}
