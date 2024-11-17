@@ -1,7 +1,10 @@
 from sklearn.preprocessing import StandardScaler
 from pydantic import BaseModel
 from fastapi import FastAPI , HTTPException
+import joblib
 app = FastAPI()
+model = joblib.load('knn_model.joblib')
+scaler = joblib.load('scaler.joblib')
  # GET request
 @app.get("/")
 def read_root():
@@ -20,6 +23,7 @@ class InputFeatures(BaseModel):
     minutes_played: int
     current_value: int
     highest_value: int
+
 def preprocessing(input_features: InputFeatures): 
     dict_f = {
             'Position_Forward': input_features.position == 'Forward',
