@@ -5,15 +5,17 @@ import json
 # FastAPI endpoint URL
 API_URL = "https://usecase-7knn.onrender.com/predict"
 
-
 # Function to make the POST request to the FastAPI model
 def get_prediction(data):
-    response = requests.post(API_URL, json=data)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        return {"error": "Something went wrong"}
-
+    try:
+        response = requests.post(API_URL, json=data)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": f"Unexpected status code: {response.status_code}"}
+    except requests.exceptions.RequestException as e:
+        return {"error": f"Request failed: {e}"}
 
 # Streamlit app UI
 st.title("Football Player Prediction")
@@ -35,7 +37,7 @@ data = {
     "minutes_played": minutes_played,
     "days_injured": days_injured,
     "games_injured": games_injured,
-    "award": award,
+    "award": award,  # Ensure the type matches API requirements
     "highest_value": highest_value,
     "position": position
 }
