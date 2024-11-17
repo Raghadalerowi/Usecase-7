@@ -3,7 +3,7 @@ import requests
 import json
 
 # FastAPI endpoint URL
-API_URL = "https://usecase-7-vxqr.onrender.com/predict"
+API_URL = "https://usecase-7kmeans.onrender.com/predict"
 
 # Function to make the POST request to the FastAPI model
 def get_prediction(data):
